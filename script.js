@@ -11,7 +11,7 @@ $(document).ready(function () {
         .then(function (data) {
             console.log(data.data.fact);
             $(funFact).prepend()
-            $(welcomeText).text(data.data.fact);
+            $(funFact).text(data.data.fact);
 
 
         })
