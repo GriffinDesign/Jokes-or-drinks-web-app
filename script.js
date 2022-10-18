@@ -4,7 +4,13 @@ let funFact = $(".fun-fact-text");
 let dadJokeBtn = $(".needs-dad-joke");
 let dadJokeText = $(".dad-joke-text")
 let noBtn = $(".no-button")
+let congrats = $(".congrats")
 
+
+$(congrats).on("click", function () {
+  $(congrats).text("Well, congrats! 🎉");
+
+})
 
 
 //--------------//
