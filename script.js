@@ -16,6 +16,7 @@ let drinkName = $(".cocktailPic")
 let localStorageObj = []
 let favoriteList = $(".favoriteList")
 
+
 //query select html elements
 let getApi = function () {
   let cocktailAPI = "https://thecocktaildb.com/api/json/v1/1/random.php";
@@ -33,7 +34,7 @@ let getApi = function () {
       for (var i = 0; i < ingredientArray.length; i++) {
 
         $("<li>").text(ingredientArray[i]).appendTo(ingredientList)
-        console.log(data)
+        // console.log(data)
       }
 
     })
@@ -53,7 +54,7 @@ let getImage = function (data) {
   let cocktailImage = (data.drinks[0].strDrinkThumb)
 
   localStorageObj.push(cocktailImage)
-  $("#cocktailPic").attr('src', cocktailImage[1])
+  $("#cocktailPic").attr('src', cocktailImage)
 }
 
 //drink recipe
@@ -72,7 +73,16 @@ let fetchIngredientArray = function (data) {
   return ingredientArray
 }
 
-getApi()
+// display cocktail recipe
+
+let displayCocktail = $('.display-cocktial')
+
+displayCocktail.on('click', function(){
+  getApi();
+  $(displayCocktail).text('Show me another recipe')
+
+
+})
 
 // save favorite
 
@@ -95,22 +105,13 @@ let showFavoriteDrink = $('.showFavorite')
 
 showFavoriteDrink.on('click', function () {
 
-  // $(".cocktailDiv").addClass("hide")
-
-  let savedFavorite = JSON.parse(localStorage.getItem('favorite'))
-  // console.log(savedFavorite)
-  console.log(savedFavorite)
-  console.log(localStorageObj)
-  $("h2").text(savedFavorite).appendTo(favoriteList)
-
-
-
-  //------------------------//
-
+  let getFavorite = JSON.parse(localStorage.getItem('favorite'))
+  let favUl = $("<ul>").appendTo(favoriteList)
+  $("<li>").text(getFavorite).appendTo(favUl)
 
 })
 
-
+ //------------------------//
 
 
 $(document).ready(function () {
