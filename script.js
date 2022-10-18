@@ -1,7 +1,7 @@
 $(document).ready(function () {
-  let startBtn = document.getElementsByClassName("start-button")
-  let welcomeText = document.getElementsByClassName(".welcome-text")
-  let funFact = document.getElementsByClassName("fun-fact-text");
+  let startBtn = $(".start-button")
+  let welcomeText = $(".welcome-text")
+  let funFact = $(".fun-fact-text");
   function factFetch() {
     const funFactAPI = "https://asli-fun-fact-api.herokuapp.com/"
     fetch(funFactAPI)
