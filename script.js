@@ -77,10 +77,11 @@ let fetchIngredientArray = function (data) {
 
 let displayCocktail = $('.display-cocktial')
 
-displayCocktail.on('click', function(){
+let loadCocktailRecipe = displayCocktail.on('click', function(){
+  
   getApi();
   $(displayCocktail).text('Show me another recipe')
-
+  // $('.cocktailDiv').hide()
 
 })
 
@@ -95,8 +96,8 @@ favoriteBtn.on('click', function () {
   // console.log(localStorageFavorite[0])
 
   localStorage.setItem('favorite', JSON.stringify(localStorageFavorite))
-  // localStorage.setItem('myObj',myObjString)
-  console.log(JSON.parse(localStorage.favorite)[0])
+  
+  // console.log(JSON.parse(localStorage.favorite[0]))
 
 })
 
@@ -104,10 +105,13 @@ favoriteBtn.on('click', function () {
 let showFavoriteDrink = $('.showFavorite')
 
 showFavoriteDrink.on('click', function () {
-
+  $('.cocktailDiv').hide()
   let getFavorite = JSON.parse(localStorage.getItem('favorite'))
+
+  // console.log(getFavorite[0])
   let favUl = $("<ul>").appendTo(favoriteList)
   $("<li>").text(getFavorite).appendTo(favUl)
+
 
 })
 
