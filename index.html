@@ -8,9 +8,11 @@
     <title>Jokes or Drinks</title>
 </head>
 <body class="bg-blue-500 text-center">
-    <div class="font-sans text-7xl font-black text-white my-96">Are you having a bad day?</div>
+    <div class="font-sans text-7xl font-black text-white my-96 welcome-text">Are you having a bad day?</div>
+    <div class="font-sans text-7xl font-black text-white my-96 fun-fact-text"></div>
+    
     <div class="inline-flex space-x-10">
-        <button class="bg-blue-700 shadow-lg hover:bg-blue-800 text-white font-bold py-3 px-5 w-52 bottom-80 relative">YES</button>
+        <button class="bg-blue-700 shadow-lg hover:bg-blue-800 text-white font-bold py-3 px-5 w-52 bottom-80 relative start-button">YES</button>
         <button class="bg-blue-700 shadow-lg hover:bg-blue-800 text-white font-bold py-3 px-5 w-52 bottom-80 relative">NO</button>
       </div>
 
@@ -24,10 +26,60 @@
         <div class="inline-flex space-x-10">
             <button class="bg-blue-700 shadow-lg hover:bg-blue-800 text-white font-bold py-3 px-5 w-52 bottom-80 relative">MORE DAD JOKES PLEASE</button>
             <button class="bg-blue-700 shadow-lg hover:bg-blue-800 text-white font-bold py-3 px-5 w-52 bottom-80 relative">GET ME A DRINK</button>
-          </div>
+        </div>
 
     
+    </div>
+
+    <div class="outer-container">
+
+        <div class="inner-container">
     
+    
+            <!-- DAD Joke Question -->
+            
+            <div class="hide">
+                <div>
+                    <h2 id="joke" class="displayJoke">Joke of the day</h2>
+                </div>
+                <div>
+                    <p id="question" class="question">DID THAT JOKE MAKE YOU FEEL BETTER? DO YOU WANT ANOTHER?</p>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary">MORE DAD JOKE</button>
+                    <button type="button" class="btn btn-danger">GET ME A DRINK</button>
+                </div>
+            </div>
+            
+            <!--Cocktail recipes-->
+            <div class ="cocktailDiv">
+                <div class="cocktailPic">
+                    <img id="cocktailPic" src="" alt="Picture of cocktail">
+                </div>
+    
+                <div class="recipes" id="recipes">
+                   
+                </div>
+                
+            </div>
+            <div class="buttonBox">
+                <button class="btn">Favorite</button>
+            </div>
+      
+        </div>
+    
+        <div class="btn" id="favoriteStorage">
+            <button class ="showFavorite">Show Favorite</button>
+        </div>
+    
+    
+        <div class="favoriteList ">
+            <h2>
+
+            </h2>
+        </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>      
     <script src="script.js"></script>  
 </body>
 </html>

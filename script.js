@@ -1,37 +1,32 @@
-var funFactAPI = "https://asli-fun-fact-api.herokuapp.com/";
-var dadJokeAPI = "https://icanhazdadjoke.com";
-var cocktailAPI = "https://thecocktaildb.com/api/json/v1/1/random.php";
+$(document).ready(function () {
+  let startBtn = document.getElementsByClassName("start-button")
+  let welcomeText = document.getElementsByClassName(".welcome-text")
+  let funFact = document.getElementsByClassName("fun-fact-text");
+  function factFetch() {
+    const funFactAPI = "https://asli-fun-fact-api.herokuapp.com/"
+    fetch(funFactAPI)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data.data.fact);
+            $(funFact).prepend()
+            $(funFact).text(data.data.fact);
 
-fetch(funFactAPI)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    console.log(data);
-  });
 
-fetch(dadJokeAPI, {
-  headers : { 
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-   }
-})
-  .then(function (response) {
-  return response.json();
-})
-.then(function (data) {
-  console.log(data);
-})
+        })
+}
 
 
 
-fetch(cocktailAPI)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    console.log(data);
-  });
+
+// fetch(cocktailAPI)
+//   .then(function (response) {
+//     return response.json();
+//   })
+//   .then(function (data) {
+//     console.log(data);
+//   });
 
 //--------------//
 // Drink Recipe
@@ -79,7 +74,7 @@ let getImage = function(data){
     let cocktailImage =(data.drinks[0].strDrinkThumb)
     
     localStorageObj.push(cocktailImage)
-    $("#cocktailPic").attr('src',cocktailImage)
+    $("#cocktailPic").attr('src',cocktailImage[1])
 }
 
 //drink recipe
@@ -111,7 +106,7 @@ favoriteBtn.on('click', function(){
     
     localStorage.setItem('favorite', JSON.stringify(localStorageFavorite))
     // localStorage.setItem('myObj',myObjString)
-    console.log(localStorage)
+    console.log(JSON.parse(localStorage.favorite)[0])
    
 })
 
@@ -120,10 +115,21 @@ let showFavoriteDrink = $('.showFavorite')
 
 showFavoriteDrink.on('click', function(){
     
-    $(".cocktailDiv").addClass("hide")
+    // $(".cocktailDiv").addClass("hide")
   
-    let savedFavorite = JSON.parse(localStorage.getItem('ingredientArray'))
+    let savedFavorite = JSON.parse(localStorage.getItem('favorite'))
+    // console.log(savedFavorite)
+    console.log(savedFavorite)
+    console.log(localStorageObj)
+    $("h2").text(savedFavorite).appendTo(favoriteList)
 
-    $("<h2>").text(savedFavorite).attr('id','favoriteList').appendTo(favoriteList)
+})
+
+
+$(startBtn).on("click", function () {
+    factFetch();
+    $(welcomeText).remove();
+    $(startBtn).text("Show another fact!");
+})
 })
 
