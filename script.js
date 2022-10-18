@@ -1,7 +1,9 @@
 $(document).ready(function () {
-  let startBtn = $(".start-button")
-  let welcomeText = $(".welcome-text")
+  let startBtn = $(".start-button");
+  let welcomeText = $(".welcome-text");
   let funFact = $(".fun-fact-text");
+  let dadJokeBtn = $(".needs-dad-joke");
+  let dadJokeText = $(".dad-joke-text")
   function factFetch() {
     const funFactAPI = "https://asli-fun-fact-api.herokuapp.com/"
     fetch(funFactAPI)
@@ -15,11 +17,33 @@ $(document).ready(function () {
 
 
         })
+     
 }
+function dadJokeFetch() {
+  const dadJokeAPI = "https://icanhazdadjoke.com";
+  fetch(dadJokeAPI, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+})
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        $(dadJokeText).text(data.joke)
+
+    })
+} 
+
 
 $(startBtn).on("click", function () {
     factFetch();
     $(welcomeText).remove();
     $(startBtn).text("Show another fact!");
 })
+$(dadJokeBtn).on("click", function () {
+  dadJokeFetch();
+
+}) 
 })
