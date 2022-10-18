@@ -1,2 +1,4 @@
 # Jokes-or-drinks-web-app
-Generates dad jokes or cocktail recipes based on user input
+If you are having a bad day this generates dad jokes or cocktail recipes for you to cheer you up!
+
+![screenshot](screenshot.png)
