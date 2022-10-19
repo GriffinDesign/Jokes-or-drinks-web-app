@@ -11,7 +11,7 @@ let noBtn = $(".no-button")
 // Drink Recipe
 //--------------//
 
-let recipesDiv = $("#recipes")
+let recipesDiv = $(".recipes")
 let drinkName = $(".cocktailPic")
 let localStorageObj = []
 let favoriteList = $(".favoriteList")
@@ -77,17 +77,18 @@ let fetchIngredientArray = function (data) {
 
 let displayCocktail = $('.display-cocktial')
 
-let loadCocktailRecipe = displayCocktail.on('click', function(){
-  
+displayCocktail.on('click', function () {
+  console.log("cokcktail")
   getApi();
   $(displayCocktail).text('Show me another recipe')
+
   // $('.cocktailDiv').hide()
 
 })
-
+// $('.recipes').remove()
 // save favorite
 
-let favoriteBtn = $(".btn")
+let favoriteBtn = $(".favBtn")
 favoriteBtn.on('click', function () {
 
   let localStorageFavorite = JSON.parse(localStorage.getItem('favorite')) || []
@@ -96,26 +97,30 @@ favoriteBtn.on('click', function () {
   // console.log(localStorageFavorite[0])
 
   localStorage.setItem('favorite', JSON.stringify(localStorageFavorite))
-  
+
   // console.log(JSON.parse(localStorage.favorite[0]))
 
 })
 
-
 let showFavoriteDrink = $('.showFavorite')
 
 showFavoriteDrink.on('click', function () {
-  $('.cocktailDiv').hide()
+  console.log("Targeted")
+  // $('.cocktailDiv').hide()
   let getFavorite = JSON.parse(localStorage.getItem('favorite'))
-
+  let savedFavRecipe = []
+  for (var i = 0; getFavorite.length - 1; i++) {
+    let savedCocktail = getFavorite[i][0]
+    console.log($(".list-drink li"))
+  
+    let favUl = $(".list-drink")
+    // $("<li>").text(savedFavRecipe).append(favUl)
+    favUl.append('<li>'+savedCocktail+'</li>')
+  }
   // console.log(getFavorite[0])
-  let favUl = $("<ul>").appendTo(favoriteList)
-  $("<li>").text(getFavorite).appendTo(favUl)
-
-
 })
 
- //------------------------//
+//------------------------//
 
 
 $(document).ready(function () {
@@ -133,36 +138,36 @@ $(document).ready(function () {
 
 
       })
-    }
+  }
 
-    $(startBtn).on("click", function () {
-      factFetch();
-      $(welcomeText).remove();
-      $(noBtn).remove();
-      $(startBtn).text("Show another fact!");
+  $(startBtn).on("click", function () {
+    factFetch();
+    $(welcomeText).remove();
+    $(noBtn).remove();
+    $(startBtn).text("Show another fact!");
+  })
+
+  $(dadJokeBtn).on("click", function () {
+    dadJokeFetch();
+    $(dadJokeBtn).text("Show another dad joke!");
+
+  })
+
+  function dadJokeFetch() {
+    const dadJokeAPI = "https://icanhazdadjoke.com";
+    fetch(dadJokeAPI, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+
     })
-
-    $(dadJokeBtn).on("click", function () {
-      dadJokeFetch();
-      $(dadJokeBtn).text("Show another dad joke!");
-
-    })
-
-    function dadJokeFetch() {
-      const dadJokeAPI = "https://icanhazdadjoke.com";
-      fetch(dadJokeAPI, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        $(dadJokeText).text(data.joke)
 
       })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          $(dadJokeText).text(data.joke)
-
-        })
-    }
-  })
+  }
+})
