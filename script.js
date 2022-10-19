@@ -24,6 +24,7 @@ let favoriteList = $(".favoriteList")
 
 
 //query select html elements
+
 let getApi = function () {
   let cocktailAPI = "https://thecocktaildb.com/api/json/v1/1/random.php";
 
@@ -32,26 +33,39 @@ let getApi = function () {
       return response.json();
     })
     .then(function (data) {
-
-      getDrink(data)
-      getImage(data)
+      console.log(data)
+      let id = getDrink(data)
+      let img = getImage(data)
+      let link = getLink(data)
       let ingredientArray = fetchIngredientArray(data)
       let ingredientList = $("<ul>").appendTo(recipesDiv)
+
+      let drinkInfo = [id, img, link, ingredientArray]
+      localStorageObj.push(drinkInfo)
       for (var i = 0; i < ingredientArray.length; i++) {
 
         $("<li>").text(ingredientArray[i]).appendTo(ingredientList)
-        // console.log(data)
+        
       }
 
     })
+}
+// 
+function getLink(data) {
+
+  let drinkId = (data.drinks[0].idDrink)
+  
+  console.log(localStorageObj)
+  return drinkId
 }
 
 // drink name
 
 let getDrink = function (data) {
   let cocktailName = (data.drinks[0].strDrink)
-  localStorageObj.push(cocktailName)
+  
   $("<h2>").text(cocktailName).attr('class', 'drinkName').appendTo(recipesDiv)
+  return cocktailName
 }
 
 // drink image
@@ -59,8 +73,8 @@ let getDrink = function (data) {
 let getImage = function (data) {
   let cocktailImage = (data.drinks[0].strDrinkThumb)
 
-  localStorageObj.push(cocktailImage)
   $("#cocktailPic").attr('src', cocktailImage)
+  return cocktailImage
 }
 
 //drink recipe
@@ -72,7 +86,7 @@ let fetchIngredientArray = function (data) {
     let cocktailRecipe = (data.drinks[0][`strIngredient${i}`])
     if (cocktailRecipe) {
       ingredientArray.push(cocktailRecipe)
-      localStorageObj.push(cocktailRecipe)
+      
     }
   }
 
@@ -88,10 +102,9 @@ displayCocktail.on('click', function () {
   getApi();
   $(displayCocktail).text('Show me another recipe')
 
-  // $('.cocktailDiv').hide()
-
+  /
 })
-// $('.recipes').remove()
+
 // save favorite
 
 let favoriteBtn = $(".favBtn")
@@ -104,26 +117,44 @@ favoriteBtn.on('click', function () {
 
   localStorage.setItem('favorite', JSON.stringify(localStorageFavorite))
 
-  // console.log(JSON.parse(localStorage.favorite[0]))
+  /*
+    something about adding information to localstorage is not working correctly
+    at the moment, the information about all the drinks are added to one another
+    it should look like this:
+    localStorage = [
+      ["long island ice tea", '12345', [ingredient 1, inggedient 2]],
+      ['negroni', '54313', ['ingredient 1', 'ingredient 2]]
+    ]
+
+  */
 
 })
 
 let showFavoriteDrink = $('.showFavorite')
 
 showFavoriteDrink.on('click', function () {
-  console.log("Targeted")
-  // $('.cocktailDiv').hide()
+
   let getFavorite = JSON.parse(localStorage.getItem('favorite'))
+
+  // set get favoriet to the last item to local storage
+
+  getFavorite = getFavorite.pop()
+  console.log(getFavorite, "getFav")
   let savedFavRecipe = []
+
   for (var i = 0; getFavorite.length - 1; i++) {
+
     let savedCocktail = getFavorite[i][0]
-    console.log($(".list-drink li"))
-  
+
     let favUl = $(".list-drink")
-    // $("<li>").text(savedFavRecipe).append(favUl)
-    favUl.append('<li>'+savedCocktail+'</li>')
+
+    let newName = savedCocktail.replace(/\s+/g, '-')
+
+
+    favUl.append(`<li><a href ="https://thecocktaildb.com/drink/${getFavorite[i][2]}-${newName}">` + savedCocktail + '</a></li>')
+
   }
-  // console.log(getFavorite[0])
+
 })
 
 //------------------------//
