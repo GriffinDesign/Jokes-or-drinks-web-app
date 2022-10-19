@@ -72,8 +72,8 @@ let getDrink = function (data) {
 
 let getImage = function (data) {
   let cocktailImage = (data.drinks[0].strDrinkThumb)
-
-  $("#cocktailPic").attr('src', cocktailImage)
+  $(".cocktailPic").attr('src', cocktailImage)
+  $('.cocktailPic').attr('alt',`A picture of ${data.drinks[0].strDrink}`)
   return cocktailImage
 }
 
@@ -89,7 +89,6 @@ let fetchIngredientArray = function (data) {
       
     }
   }
-
   return ingredientArray
 }
 
@@ -98,11 +97,11 @@ let fetchIngredientArray = function (data) {
 let displayCocktail = $('.display-cocktial')
 
 displayCocktail.on('click', function () {
-  console.log("cokcktail")
+
   getApi();
   $(displayCocktail).text('Show me another recipe')
 
-  /
+  
 })
 
 // save favorite
@@ -140,7 +139,6 @@ showFavoriteDrink.on('click', function () {
 
   getFavorite = getFavorite.pop()
   console.log(getFavorite, "getFav")
-  let savedFavRecipe = []
 
   for (var i = 0; getFavorite.length - 1; i++) {
 
