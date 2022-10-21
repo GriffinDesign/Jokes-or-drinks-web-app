@@ -28,6 +28,10 @@ let favoriteList = $(".favoriteList")
 let getApi = function () {
   let cocktailAPI = "https://thecocktaildb.com/api/json/v1/1/random.php";
 
+  //clear localStorageObj everytime i click get me a new drink
+
+  localStorageObj.length = 0
+
   fetch(cocktailAPI)
     .then(function (response) {
       return response.json();
@@ -43,6 +47,7 @@ let getApi = function () {
 
       let drinkInfo = [id, img, link, ingredientArray]
       localStorageObj.push(drinkInfo)
+      console.log(id, localStorageObj)
       for (var i = 0; i < ingredientArray.length; i++) {
 
         $("<li>").text(ingredientArray[i]).appendTo(ingredientList)
@@ -110,13 +115,30 @@ displayCocktail.on('click', function () {
 let favoriteBtn = $(".favBtn")
 favoriteBtn.on('click', function () {
 
-  let localStorageFavorite = JSON.parse(localStorage.getItem('favorite')) || []
+  // first check if there is a drink selected
 
-  localStorageFavorite.push(localStorageObj)
-  // console.log(localStorageFavorite[0])
+  if (localStorageObj.length > 0){
 
-  localStorage.setItem('favorite', JSON.stringify(localStorageFavorite))
+    let localStorageFavorite = JSON.parse(localStorage.getItem('favorite') || "[]")
 
+    // check name of drinks currently in local storage
+    let currentFav = []
+    for(var i = 0; i < localStorageFavorite.length; i++){
+      //add the name of each drink to current fav
+      currentFav.push(localStorageFavorite[i][0][0])
+    }
+
+    let currentDrinkName = localStorageObj[0][0]
+
+  //If drink is already in fav, do not add to fav
+
+    if(!currentFav.includes(currentDrinkName)){
+       console.log('currentFav', currentFav)
+       localStorageFavorite.push(localStorageObj)
+        localStorage.setItem('favorite', JSON.stringify(localStorageFavorite))
+    }
+
+  }
   /*
     something about adding information to localstorage is not working correctly
     at the moment, the information about all the drinks are added to one another
@@ -133,25 +155,25 @@ let showFavoriteDrink = $('.showFavorite')
 
 showFavoriteDrink.on('click', function () {
 
+  let favUl = $(".list-drink")
+  // delete favorite from html 
+  console.log("list of fav drinks", favUl)
+  favUl.innerHTML = ''
   let getFavorite = JSON.parse(localStorage.getItem('favorite'))
+  console.log(getFavorite)
 
   // set get favoriet to the last item to local storage
 
-  getFavorite = getFavorite.pop()
-  console.log(getFavorite, "getFav")
-
-  for (var i = 0; getFavorite.length - 1; i++) {
-
-    let savedCocktail = getFavorite[i][0]
-
-    let favUl = $(".list-drink")
+  for (var i = 0; i < getFavorite.length; i++) {
+    
+    let savedCocktail = getFavorite[i][0][0]
 
     let newName = savedCocktail.replace(/\s+/g, '-')
 
+    favUl.append(`<li><a href ="https://thecocktaildb.com/drink/${getFavorite[i][0][2]}-${newName}">` + savedCocktail + '</a></li>')
 
-    favUl.append(`<li><a href ="https://thecocktaildb.com/drink/${getFavorite[i][2]}-${newName}">` + savedCocktail + '</a></li>')
-
-  }
+  //   favUl.append('<li>'+savedCocktail +'</li>')
+   }
 
 })
 
