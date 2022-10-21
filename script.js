@@ -38,6 +38,7 @@ let getApi = function () {
       let img = getImage(data)
       let link = getLink(data)
       let ingredientArray = fetchIngredientArray(data)
+      recipesDiv.empty()
       let ingredientList = $("<ul>").appendTo(recipesDiv)
 
       let drinkInfo = [id, img, link, ingredientArray]
@@ -124,7 +125,6 @@ favoriteBtn.on('click', function () {
       ["long island ice tea", '12345', [ingredient 1, inggedient 2]],
       ['negroni', '54313', ['ingredient 1', 'ingredient 2]]
     ]
-
   */
 
 })
@@ -156,7 +156,6 @@ showFavoriteDrink.on('click', function () {
 })
 
 //------------------------//
-
 
 $(document).ready(function () {
 
